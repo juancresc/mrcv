@@ -19,6 +19,7 @@ fca95375099f7de2ba902a13d570139c  12dpi_C_R3.fq.gz
 90ce4a05e727c2de7301c0ed82bff244  12dpi_T_R2.fq.gz
 1ff95b5df39d176cd61e3657846d74c0  12dpi_T_R3.fq.gz
 16f44c769b7688b3152bd11200258caf  12dpi_T_R4.fq.gz
+
 8183a9f867ca1d210cf833faeede99e7  21dpi_C_R1.fq.gz
 169b74fd97450bddb7668287db9a6d66  21dpi_C_R2.fq.gz
 752c59026029aebe8b6ba724a59860ba  21dpi_C_R3.fq.gz
