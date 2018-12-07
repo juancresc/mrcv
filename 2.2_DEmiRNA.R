@@ -14,7 +14,7 @@ biocLite("DESeq2")
 install.packages("rlang", type = "source")
 
 library("DESeq2")
-alpha <- 0.01
+alpha <- 0.5
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path));
 getwd()
 
