@@ -3,7 +3,7 @@ biocLite("RCurl")
 biocLite("DESeq2")
 library("DESeq2")
 
-directory <- "/home/juan/Desktop/juan/bio/data/mrcv/counts/"
+directory <- "/home/juan/Desktop/juan/bio/mrcv/data/res/rna_deg/counts"
 
 sampleFiles <- grep("txt",list.files(directory),value=TRUE)
 sampleFiles
@@ -29,6 +29,6 @@ res <- res[order(res$padj),]
 # save data results and normalized reads to csv
 resdata <- merge(as.data.frame(res), as.data.frame(counts(dds,normalized =TRUE)), by = 'row.names', sort = FALSE)
 names(resdata)[1] <- 'gene'
-write.csv(resdata, file = "/home/juan/Desktop/juan/bio/data/mrcv/counts/DEG-normalized.csv")
+write.csv(resdata, file = "/home/juan/Desktop/juan/bio/mrcv/data/res/rna_deg/DEG-normalized.csv")
 
 
