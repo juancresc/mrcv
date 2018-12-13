@@ -11,7 +11,7 @@ biocLite("DESeq2")
 #dir.create(result_path)
 
 
-install.packages("rlang", type = "source")
+#install.packages("rlang", type = "source")
 
 library("DESeq2")
 alpha <- 0.5
@@ -19,9 +19,9 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path));
 getwd()
 
 # Load data
-countdata <- read.table("data_local/res/21dpi_iwgsc_bowtie_m_all_2/counts_filtered.csv",header=TRUE)
+countdata <- read.table("data/res/iwgsc_10_12_18/counts_filtered.csv",header=TRUE,sep="\t")
 #countdata <- read.table("data/files/counts.clean.txt",header=TRUE)
-result_path <- "data_local/res/21dpi_iwgsc_bowtie_m_all_2/"
+result_path <- "data/res/"
 result_file = paste(result_path,"/diffexpr-results.",alpha,".csv",sep="");
 #DROP unique miRNA clusters
 countdata <- countdata[!is.na(countdata$Name),]
