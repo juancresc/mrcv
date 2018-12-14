@@ -7,7 +7,7 @@
 import pandas as pd
 from subprocess import Popen, PIPE, call
 lb = 'iwgsc_10_12_18'
-path_target_finder = '/home/juan/Desktop/juan/bio/mrcv/sw/TargetFinder/targetfinder.pl'
+path_target_finder = 'sw/TargetFinder/targetfinder.pl'
 target_seqs = 'data/res/DEG-cdna.csv'
 
 
