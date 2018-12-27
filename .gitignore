@@ -5,3 +5,4 @@ data
 data_local
 .Rhistory
 sw
+get_data.sh
