@@ -2,7 +2,7 @@ import pandas as pd
 from itertools import cycle
 path_blast = 'data/results/'
 
-te_type = 'TRIM'
+te_type = 'MITE'
 print('Running for', te_type)
 
 #TEs
