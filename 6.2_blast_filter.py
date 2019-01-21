@@ -1,6 +1,5 @@
 import pandas as pd
 from itertools import cycle
-path_blast = 'data/results/'
 
 te_type = 'MITE'
 print('Running for', te_type)
@@ -11,7 +10,7 @@ params['MITE'] = {'min_len':50,'max_len':800,'min_distance':5,'max_q':1.15,'min_
 #select which TE type you want to run
 
 #read blast output
-df = pd.read_csv(path_blast + params[te_type]['file'], sep='\t', header=None)
+df = pd.read_csv(params[te_type]['file'], sep='\t', header=None)
 df.columns = ['qseqid','sseqid','qstart','qend','sstart','send','score','length','mismatch','gaps','gapopen','nident','pident','qlen','slen','qcovs']
 print('initial:',len(df.index))
 
