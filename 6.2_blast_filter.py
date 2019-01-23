@@ -1,20 +1,35 @@
+
+# coding: utf-8
+
+# In[174]:
+
+
 import pandas as pd
 from itertools import cycle
 
 te_type = 'MITE'
 print('Running for', te_type)
 
+
+# In[175]:
+
+
 #TEs
 params = {}
 params['MITE'] = {'min_len':50,'max_len':800,'min_distance':5,'max_q':1.15,'min_q':0.85,'min_pident':90,'min_qcov':90,'file':'data/tes/blast_all.csv'}
 #select which TE type you want to run
+
+
+# In[176]:
+
 
 #read blast output
 df = pd.read_csv(params[te_type]['file'], sep='\t', header=None)
 df.columns = ['qseqid','sseqid','qstart','qend','sstart','send','score','length','mismatch','gaps','gapopen','nident','pident','qlen','slen','qcovs']
 print('initial:',len(df.index))
 
-# In[40]:
+
+# In[177]:
 
 
 #filter by length
@@ -23,7 +38,7 @@ if(params[te_type]['min_len']):
 print('Min len: ' + str(len(df.index)))    
 
 
-# In[41]:
+# In[178]:
 
 
 if(params[te_type]['max_len']):
@@ -31,7 +46,7 @@ if(params[te_type]['max_len']):
 print('Max len: ' + str(len(df.index)))    
 
 
-# In[42]:
+# In[179]:
 
 
 #filter by query / subject length treshold
@@ -39,46 +54,55 @@ df = df[((df.length / df.qlen) >= params[te_type]['min_q'])]
 print('min treshold:',len(df.index))
 
 
-# In[43]:
+# In[180]:
 
 
 df = df[((df.length / df.qlen) <= params[te_type]['max_q'])]
 print('max treshold:',len(df.index))
 
 
-# In[44]:
+# In[181]:
 
 
-#filter by pident
 df = df[(df.pident >= params[te_type]['min_pident'])]
 print('Min_pident: ' + str(len(df.index)))
 
 
-# In[45]:
+# In[182]:
 
 
-#filter by qcov
 df = df[(df.qcovs >= params[te_type]['min_qcov'])]
 print('Min qcov: ' + str(len(df.index)))
 
 
-# In[46]:
+# In[165]:
 
 
-#order sstart and send
+#re-arrange start and end
 df['new_sstart'] = df[['sstart','send']].min(axis=1)
 df['new_ssend'] = df[['sstart','send']].max(axis=1)
 df['sstart'] = df['new_sstart']
 df['send'] = df['new_ssend']
 df = df.drop('new_sstart',axis=1).drop('new_ssend',axis=1)
 
-# sep by chr
+
+# In[166]:
+
+
+df = df.sort_values(by=['sseqid','sstart'])
+df.reset_index(inplace=True)
+df = df.drop('index',axis=1)
+
+
+# In[167]:
+
+
 dfs = {}
 for seq in df.sseqid.unique():
     dfs[seq] = df[df.sseqid == seq]
 
 
-# In[ ]:
+# In[170]:
 
 
 # filter overlapped 
@@ -97,13 +121,14 @@ for index, row in df.iterrows():
     if index in discard:
         continue
     df_2 = dfs[row.sseqid]
-    res = df_2[(abs(df_2.sstart - row.sstart) <= params[te_type]['min_distance']) | (abs(df_2.send - row.send) <= params[te_type]['min_distance'])]
-    if len(res.index) > 1:
-        discard.extend(res.index.values)
+    new_index = index + 1
+    while (new_index in df_2.index) and (df_2.loc[new_index,'sstart'] - row.sstart <= params[te_type]['min_distance'] or abs(df_2.loc[new_index,'send']) - row.send <= params[te_type]['min_distance']):
+        discard.append(new_index)
+        new_index += 1
     rows.append(row)
 
 
-# In[ ]:
+# In[171]:
 
 
 df = pd.DataFrame(rows)
@@ -111,10 +136,10 @@ df.sort_values(['sseqid', 'sstart'], inplace=True)
 print('Non overlapped: ' + str(len(df.index)))
 
 
-# In[ ]:
+# In[172]:
 
 
-filename = path_blast + params[te_type]['file'] + '.filtered'
+filename = params[te_type]['file'] + '.filtered'
 df.to_csv(filename, index=None, sep='\t')
 filename
 
