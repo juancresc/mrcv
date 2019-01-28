@@ -116,7 +116,7 @@ for seq in chrs:
         curr_new = int(count * 100 * 1.0 / (total * 1.0))
         if curr_new != curr:
             curr = curr_new
-            if curr_new % 10 == 0:
+            if curr_new % 1 == 0:
                 print(curr_new)
         if index in discard:
             continue
