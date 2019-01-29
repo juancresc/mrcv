@@ -139,7 +139,7 @@ print('Non overlapped: ' + str(len(df.index)))
 # In[188]:
 
 
-filename = params[te_type]['file'] + '.new.filtered'
+filename = params[te_type]['file'] + '.2.filtered'
 df.to_csv(filename, index=None, sep='\t')
 filename
 
