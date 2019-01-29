@@ -5,9 +5,6 @@
 
 
 import pandas as pd
-import dask.dataframe as dd
-from dask.multiprocessing import get
-
 te_type = 'MITE'
 print('Running for', te_type)
 
