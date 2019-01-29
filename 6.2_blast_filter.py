@@ -17,7 +17,7 @@ print('Running for', te_type)
 
 #TEs
 params = {}
-params['MITE'] = {'min_len':50,'max_len':800,'min_distance':5,'max_q':1.15,'min_q':0.85,'min_pident':90,'min_qcov':90,'file':'data/tes/blast_all.head.1.csv'}
+params['MITE'] = {'min_len':50,'max_len':800,'min_distance':5,'max_q':1.15,'min_q':0.85,'min_pident':90,'min_qcov':90,'file':'data/tes/blast_all.csv'}
 #select which TE type you want to run
 
 
