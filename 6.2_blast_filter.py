@@ -1,25 +1,27 @@
-#!/usr/bin/env python
+
 # coding: utf-8
 
-# In[ ]:
+# In[174]:
 
 
 import pandas as pd
+import dask.dataframe as dd
+from dask.multiprocessing import get
 
 te_type = 'MITE'
 print('Running for', te_type)
 
 
-# In[ ]:
+# In[175]:
 
 
 #TEs
 params = {}
-params['MITE'] = {'min_len':50,'max_len':800,'min_distance':5,'max_q':1.15,'min_q':0.85,'min_pident':90,'min_qcov':90,'file':'data/tes/blast_all.csv'}
+params['MITE'] = {'min_len':50,'max_len':800,'min_distance':5,'max_q':1.15,'min_q':0.85,'min_pident':90,'min_qcov':90,'file':'data/tes/blast_all.head.1.csv'}
 #select which TE type you want to run
 
 
-# In[ ]:
+# In[176]:
 
 
 #read blast output
@@ -28,7 +30,7 @@ df.columns = ['qseqid','sseqid','qstart','qend','sstart','send','score','length'
 print('initial:',len(df.index))
 
 
-# In[ ]:
+# In[177]:
 
 
 #filter by length
@@ -37,7 +39,7 @@ if(params[te_type]['min_len']):
 print('Min len: ' + str(len(df.index)))    
 
 
-# In[ ]:
+# In[178]:
 
 
 if(params[te_type]['max_len']):
@@ -45,7 +47,7 @@ if(params[te_type]['max_len']):
 print('Max len: ' + str(len(df.index)))    
 
 
-# In[ ]:
+# In[179]:
 
 
 #filter by query / subject length treshold
@@ -53,28 +55,28 @@ df = df[((df.length / df.qlen) >= params[te_type]['min_q'])]
 print('min treshold:',len(df.index))
 
 
-# In[ ]:
+# In[180]:
 
 
 df = df[((df.length / df.qlen) <= params[te_type]['max_q'])]
 print('max treshold:',len(df.index))
 
 
-# In[ ]:
+# In[181]:
 
 
 df = df[(df.pident >= params[te_type]['min_pident'])]
 print('Min_pident: ' + str(len(df.index)))
 
 
-# In[ ]:
+# In[182]:
 
 
 df = df[(df.qcovs >= params[te_type]['min_qcov'])]
 print('Min qcov: ' + str(len(df.index)))
 
 
-# In[ ]:
+# In[183]:
 
 
 #re-arrange start and end
@@ -85,7 +87,7 @@ df['send'] = df['new_ssend']
 df = df.drop('new_sstart',axis=1).drop('new_ssend',axis=1)
 
 
-# In[ ]:
+# In[184]:
 
 
 df = df.sort_values(by=['sseqid','sstart'])
@@ -93,52 +95,51 @@ df.reset_index(inplace=True)
 df = df.drop('index',axis=1)
 
 
-# In[ ]:
+# In[185]:
 
 
+df
 
 
+# In[186]:
 
-# In[ ]:
 
-
-dfs = {}
-chrs = df.sseqid.unique()
+my_index = 0
+indexes = []
+discard = []
 count = 0
-for seq in chrs:
-    df_2 = df[df.sseqid == seq]
-    rows = []
-    discard = []
-    total = len(df_2.index)
-    curr = 0
-    for index, row in df_2.iterrows():
-        count += 1
-        curr_new = int(count * 100 * 1.0 / (total * 1.0))
-        if curr_new != curr:
-            curr = curr_new
-            if curr_new % 1 == 0:
-                print(curr_new)
-        if index in discard:
-            continue
-        res = df_2[(abs(df_2.sstart - row.sstart) <= params[te_type]['min_distance']) | (abs(df_2.send - row.send) <= params[te_type]['min_distance'])]
-        if len(res.index) > 1:
-            discard.extend(res.index.values)
-        rows.append(row)
+curr = 0
+total_len = len(df.index)
+while my_index < total_len - 1:
+    row = df.iloc[[my_index]]
+    second_row = df.iloc[[my_index + 1]]
+    seq1 = row.sseqid
+    cond = (row.iloc[0].sseqid == second_row.iloc[0].sseqid) & (abs(second_row.iloc[0].sstart - row.iloc[0].sstart) <= params[te_type]['min_distance']) & (abs(second_row.iloc[0].send - row.iloc[0].send) <= params[te_type]['min_distance'])
+    if not cond:
+        indexes.append(my_index)
+    my_index += 1
+    #just a counter
+    count += 1
+    curr_new = int(count * 100 * 1.0 / (total_len * 1.0))
+    if curr_new != curr:
+        curr = curr_new
+        if curr_new % 5 == 0:
+            print(curr_new)
+indexes.append(total_len - 1)
 
 
-# In[ ]:
+# In[187]:
 
 
-df = pd.DataFrame(rows)
+df = df[df.index.isin(indexes)]
 df.sort_values(['sseqid', 'sstart'], inplace=True)
 print('Non overlapped: ' + str(len(df.index)))
 
 
-# In[ ]:
+# In[188]:
 
 
 filename = params[te_type]['file'] + '.new.filtered'
 df.to_csv(filename, index=None, sep='\t')
 filename
-
 
