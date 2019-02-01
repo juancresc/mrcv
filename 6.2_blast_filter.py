@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[174]:
+# In[232]:
 
 
 import pandas as pd
@@ -9,25 +9,27 @@ te_type = 'MITE'
 print('Running for', te_type)
 
 
-# In[175]:
+# In[233]:
 
 
 #TEs
 params = {}
-params['MITE'] = {'min_len':50,'max_len':800,'min_distance':5,'max_q':1.15,'min_q':0.85,'min_pident':90,'min_qcov':90,'file':'data/tes/blast_all.csv'}
+params['MITE'] = {'min_len':50,'max_len':800,'min_distance':5,'max_q':1.15,'min_q':0.85,'min_pident':90,'min_qcov':90,'file':'data/tes/blast_all.csv.first'}
 #select which TE type you want to run
 
 
-# In[176]:
+# In[234]:
 
 
 #read blast output
-df = pd.read_csv(params[te_type]['file'], sep='\t', header=None)
-df.columns = ['qseqid','sseqid','qstart','qend','sstart','send','score','length','mismatch','gaps','gapopen','nident','pident','qlen','slen','qcovs']
+df = pd.read_csv(params[te_type]['file'], sep='\t', )
+df.columns = ['qseqid','sseqid',
+              'qstart','qend','sstart',
+              'send','score','length','mismatch','gaps','gapopen','nident','pident','qlen','slen','qcovs']
 print('initial:',len(df.index))
 
 
-# In[177]:
+# In[235]:
 
 
 #filter by length
@@ -36,7 +38,7 @@ if(params[te_type]['min_len']):
 print('Min len: ' + str(len(df.index)))    
 
 
-# In[178]:
+# In[236]:
 
 
 if(params[te_type]['max_len']):
@@ -44,7 +46,7 @@ if(params[te_type]['max_len']):
 print('Max len: ' + str(len(df.index)))    
 
 
-# In[179]:
+# In[237]:
 
 
 #filter by query / subject length treshold
@@ -52,28 +54,28 @@ df = df[((df.length / df.qlen) >= params[te_type]['min_q'])]
 print('min treshold:',len(df.index))
 
 
-# In[180]:
+# In[238]:
 
 
 df = df[((df.length / df.qlen) <= params[te_type]['max_q'])]
 print('max treshold:',len(df.index))
 
 
-# In[181]:
+# In[239]:
 
 
 df = df[(df.pident >= params[te_type]['min_pident'])]
 print('Min_pident: ' + str(len(df.index)))
 
 
-# In[182]:
+# In[240]:
 
 
 df = df[(df.qcovs >= params[te_type]['min_qcov'])]
 print('Min qcov: ' + str(len(df.index)))
 
 
-# In[183]:
+# In[241]:
 
 
 #re-arrange start and end
@@ -84,21 +86,21 @@ df['send'] = df['new_ssend']
 df = df.drop('new_sstart',axis=1).drop('new_ssend',axis=1)
 
 
-# In[184]:
+# In[242]:
 
 
-df = df.sort_values(by=['sseqid','sstart'])
+df = df.sort_values(by=['sseqid','sstart', 'send'])
 df.reset_index(inplace=True)
 df = df.drop('index',axis=1)
 
 
-# In[185]:
+# In[243]:
 
 
-df
+df.head()
 
 
-# In[186]:
+# In[244]:
 
 
 my_index = 0
@@ -109,15 +111,22 @@ curr = 0
 total_len = len(df.index)
 while my_index < total_len - 1:
     row = df.iloc[[my_index]]
-    second_row = df.iloc[[my_index + 1]]
-    seq1 = row.sseqid
-    cond = (row.iloc[0].sseqid == second_row.iloc[0].sseqid) & (abs(second_row.iloc[0].sstart - row.iloc[0].sstart) <= params[te_type]['min_distance']) & (abs(second_row.iloc[0].send - row.iloc[0].send) <= params[te_type]['min_distance'])
-    if not cond:
-        indexes.append(my_index)
-    my_index += 1
+    cond = True
+    next_index = 1
+    while cond:
+        second_row = df.iloc[[my_index + next_index]]
+        c1 = (row.iloc[0].sseqid == second_row.iloc[0].sseqid)
+        c2 = (abs(second_row.iloc[0].sstart - row.iloc[0].sstart) <= params[te_type]['min_distance'])
+        c3 = (abs(second_row.iloc[0].send - row.iloc[0].send) <= params[te_type]['min_distance'])
+        cond =  c1 and c2 and c3
+        if not cond and (c2 or c3):
+            indexes.append(my_index)
+            cond = True
+        next_index += 1
+    indexes.append(my_index)
+    my_index += next_index
     #just a counter
-    count += 1
-    curr_new = int(count * 100 * 1.0 / (total_len * 1.0))
+    curr_new = int(my_index * 100 * 1.0 / (total_len * 1.0))
     if curr_new != curr:
         curr = curr_new
         if curr_new % 5 == 0:
@@ -125,7 +134,7 @@ while my_index < total_len - 1:
 indexes.append(total_len - 1)
 
 
-# In[187]:
+# In[245]:
 
 
 df = df[df.index.isin(indexes)]
@@ -133,10 +142,16 @@ df.sort_values(['sseqid', 'sstart'], inplace=True)
 print('Non overlapped: ' + str(len(df.index)))
 
 
-# In[188]:
+# In[246]:
 
 
-filename = params[te_type]['file'] + '.2.filtered'
+df.head()
+
+
+# In[247]:
+
+
+filename = params[te_type]['file'] + '.filtered'
 df.to_csv(filename, index=None, sep='\t')
 filename
 
