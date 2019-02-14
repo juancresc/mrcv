@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-<<<<<<< HEAD
-# In[11]:
-=======
->>>>>>> a795644144eed377dc83ef00f38da3668b436a1f
+# In[ ]:
 
 
 import pandas as pd
@@ -14,14 +11,10 @@ path_target_finder = '/home/juan/Desktop/juan/bio/mrcv/sw/TargetFinder/targetfin
 target_seqs = 'data/res/genes/DEG_SEQS.fasta'
 
 
-# In[12]:
+# In[ ]:
 
 
-<<<<<<< HEAD
 df = pd.read_csv('data/res/iwgsc_4_2_19/sRNA_DEG_mirbase.csv', sep='\t')
-=======
-df = pd.read_csv('data/res/sRNA_DEG_mirbase.1.csv', sep='\t')
->>>>>>> a795644144eed377dc83ef00f38da3668b436a1f
 df.head()
 
 
@@ -29,11 +22,7 @@ df.head()
 
 
 #search targets
-<<<<<<< HEAD
 out_file = open("data/res/iwgsc_4_2_19/targets_cdna.csv","w") 
-=======
-out_file = open("data/res/targets_dna_2.csv","w") 
->>>>>>> a795644144eed377dc83ef00f38da3668b436a1f
 out_total = ''
 for k,v in df.iterrows():
     if 'N' in v.seq:
@@ -56,5 +45,5 @@ out_file.close()
 # In[ ]:
 
 
-
+￼
 
