@@ -4,4 +4,7 @@ data
 .ipynb_checkpoints
 data_local
 .Rhistory
-sw
+get_data.sh
+.idea
+dev/
+scripts/
