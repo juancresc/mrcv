@@ -6,9 +6,9 @@
 
 import pandas as pd
 from subprocess import Popen, PIPE, call
-lb = 'iwgsc_10_12_18'
+lb = 'iwgsc_4_2_19'
 path_target_finder = 'sw/TargetFinder/targetfinder.pl'
-target_seqs = 'data/res/genes/DEG_SEQS.fasta'
+target_seqs = 'data/res/iwgsc_4_2_19/genes/DEG_SEQS.fasta'
 
 
 # In[ ]:
