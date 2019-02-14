@@ -1,42 +1,41 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[12]:
+# In[11]:
 
 
 import pandas as pd
 from subprocess import Popen, PIPE, call
 lb = 'iwgsc_10_12_18'
-path_target_finder = 'sw/TargetFinder/targetfinder.pl'
-target_seqs = 'data/res/DEG_SEQS.fasta'
+path_target_finder = '/home/juan/Desktop/juan/bio/mrcv/sw/TargetFinder/targetfinder.pl'
+target_seqs = 'data/res/genes/DEG_SEQS.fasta'
 
 
-# In[13]:
+# In[12]:
 
 
-df = pd.read_csv('data/res/sRNA_DEG_mirbase.csv', sep='\t')
+df = pd.read_csv('data/res/iwgsc_4_2_19/sRNA_DEG_mirbase.csv', sep='\t')
 df.head()
 
 
-# In[14]:
+# In[ ]:
 
 
 #search targets
-out_file = open("data/res/targets_dna.csv","w") 
+out_file = open("data/res/iwgsc_4_2_19/targets_cdna.csv","w") 
 out_total = ''
-total = len(df.index)
-count = 0
-print(total)
-for k,v in df.iterrows():  
-    count += 1
-    print("%i / %i" % (count, total))
-    if 'N' in v.MajorRNA:
+for k,v in df.iterrows():
+    if 'N' in v.seq:
         continue
-    cmd_list = ['perl', path_target_finder,'-s',v.MajorRNA,'-q',v.Gene,'-d',target_seqs,'-p','table']
+    cmd_list = ['perl', path_target_finder,'-s',v.seq,'-q',v.Gene,'-d',target_seqs,'-p','table']
     print(' '.join(cmd_list))
     pro = Popen(cmd_list, stdout=PIPE, stderr=PIPE)
     out,err = pro.communicate()
+#    out = str(out)
+#    err = str(err)
     print(out,err)
+    if b"No results for" in out:
+        continue
     out_total += out.decode("utf-8") 
 out_file.write(out_total)
 out_file.close()
