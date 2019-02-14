@@ -13,7 +13,7 @@ target_seqs = 'data/res/DEG_SEQS.fasta'
 # In[13]:
 
 
-df = pd.read_csv('data/res/sRNA_DEG_mirbase.csv', sep='\t')
+df = pd.read_csv('data/res/sRNA_DEG_mirbase.1.csv', sep='\t')
 df.head()
 
 
@@ -21,7 +21,7 @@ df.head()
 
 
 #search targets
-out_file = open("data/res/targets_dna.csv","w") 
+out_file = open("data/res/targets_dna_2.csv","w") 
 out_total = ''
 total = len(df.index)
 count = 0

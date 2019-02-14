@@ -14,27 +14,31 @@ biocLite("DESeq2")
 #install.packages("rlang", type = "source")
 
 library("DESeq2")
-alpha <- 0.5
+alpha <- 0.01
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path));
 getwd()
 
 # Load data
-countdata <- read.table("data/res/iwgsc_10_12_18/counts_filtered.csv",header=TRUE,sep="\t")
+countdata <- read.table("/Users/juan/Documents/manu/dev/vms/bio/mrcv/data/res/iwgsc_4_2_19/counts_filtered.csv",header=TRUE,sep="\t")
 #countdata <- read.table("data/files/counts.clean.txt",header=TRUE)
-result_path <- "data/res/"
+result_path <- "/Users/juan/Documents/manu/dev/vms/bio/mrcv/data/res/iwgsc_4_2_19/"
 result_file = paste(result_path,"/diffexpr-results.",alpha,".csv",sep="");
 #DROP unique miRNA clusters
 countdata <- countdata[!is.na(countdata$Name),]
 
 # I don't know why I have to do this first, otherwise RStudio hangs
-countdata$main <- 'NULL'
-countdata$Locus <- 'NULL'
+row.names(countdata) <- paste(countdata$Name,countdata$Locus, sep="_")
+
+countdata <- subset(countdata, select = -c(main))
+countdata <- subset(countdata, select = -c(Name))
+countdata <- subset(countdata, select = -c(Locus))
+#countdata$main <- 'NULL'
+#countdata$Locus <- 'NULL'
 # Now I can remove the main column (sum of all counts)
-countdata$main <- NULL
-countdata$Locus <- NULL
+#countdata$main <- NULL
+#countdata$Locus <- NULL
 #Set the index to name
-row.names(countdata) <- countdata$Name
-countdata$Name <- NULL
+#countdata$Name <- NULL
 # Convert to matrix
 countdata <- as.matrix(countdata)
 head(countdata)
@@ -135,7 +139,7 @@ resdata <- merge(as.data.frame(res), as.data.frame(counts(dds, normalized=TRUE))
 names(resdata)[1] <- "Gene"
 head(resdata)
 ## Write results
-write.csv(resdata, file=result_file)
+write.csv(resdata, file=result_file, row.names=FALSE)
 
 ## Examine plot of p-values
 hist(res$pvalue, breaks=50, col="grey")

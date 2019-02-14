@@ -1,0 +1,3 @@
+
+#run shortsack
+./ShortStack --bamfile iwgsc_mites/merged_alignments.filtered.bam --genomefile /mnt/disk/iwgsc/Triticum_aestivum.IWGSC.dna.toplevel.fa  --locifile /mnt/disk/mrcv/mrcv/data/tes/mites.locifile  --outdir iwgsc_mites_2
