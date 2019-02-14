@@ -39,11 +39,3 @@ for k,v in df.iterrows():
     out_total += out.decode("utf-8") 
 out_file.write(out_total)
 out_file.close()
-#os.system('grep -v "No results for" targets.csv > targets.clean.csv')
-
-
-# In[ ]:
-
-
-￼
-
