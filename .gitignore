@@ -1,11 +1,6 @@
-data
+data/
 .DS_Store
-21dpi_iwgsc_bowtie_m_all_2
 .ipynb_checkpoints
-data_local
 .Rhistory
-get_data.sh
 .idea
-dev/
-scripts/
 sw/
