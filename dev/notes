@@ -1,0 +1,11 @@
+2703
+system "samtools index -m 15 $$options{'bamfile'}";
+
+Thu Jan 31 16:33:35 -03 2019
+Required bamfile index iwgsc_mites/merged_alignments.bam.bai not found. Attempting to create with samtools index.
+[E::hts_idx_push] Region 536871232..536871256 cannot be stored in a bai index. Try using a csi index with min_shift = 14, n_lvls >= 6
+samtools index: failed to create index for "iwgsc_mites/merged_alignments.bam": Numerical result out of range
+FAILED - Aborting.
+
+
+784330
