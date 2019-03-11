@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 genome=/home/juan/Desktop/juan/bio/data/IWGSC/42/Triticum_aestivum.IWGSC.dna.toplevel.fa
 index=/home/juan/Desktop/juan/bio/data/IWGSC/indexs/hisat_2/iwgsc
-rna_path=/home/juan/Desktop/juan/bio/mrcv/data/RNASeq.aln
+rna_path=/home/juan/Desktop/juan/bio/mrcv/data/RNASeq
 hisat2_path=/home/juan/Desktop/juan/bio/sw/hisat2-2.1.0
-res_path=/home/juan/Desktop/juan/bio/mrcv/data/RNASeq.deg
+res_path=/home/juan/Desktop/juan/bio/mrcv/data/RNASeq.aln
 cd $hisat2_path
-
-./hisat2-build $genome $index
 
 ./hisat2 -x $index -U $rna_path/21dpi_C_R1.fq.gz -S $res_path/C1.sam --un $res_path/C1U.sam 2> $res_path/C1.log 
 ./hisat2 -x $index -U $rna_path/21dpi_C_R2.fq.gz -S $res_path/C2.sam --un $res_path/C2U.sam 2> $res_path/C2.log 
