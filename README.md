@@ -6,3 +6,7 @@ makeblastdb -in Triticum_aestivum.IWGSC.dna.toplevel.fa -dbtype nucl -out db
 
 
 qseqid sseqid qstart qend sstart send mismatch gaps pident evalue length qlen slen qcovs
+
+
+
+miRNA_name,miRNA_seq,miRNA_l2fc,target_method,target,target_l2fc,target_go_wheat,target_go_arabidopsis 
