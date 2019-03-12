@@ -12,7 +12,7 @@ sampleTable <- data.frame(sampleName = sampleFiles,
                           fileName = sampleFiles,
                           condition = sampleCondition)
 sampleTable
-treatments = c("T","C")
+treatments = c("C","T")
 
 ddsHTSeq <- DESeqDataSetFromHTSeqCount(sampleTable = sampleTable,
                                        directory = directory,
@@ -29,6 +29,6 @@ res <- res[order(res$padj),]
 # save data results and normalized reads to csv
 resdata <- merge(as.data.frame(res), as.data.frame(counts(dds,normalized =TRUE)), by = 'row.names', sort = FALSE)
 names(resdata)[1] <- 'gene'
-write.csv(resdata, file = "/home/juan/Desktop/juan/bio/mrcv/data/RNASeq.deg/DEG-normalized.csv")
+write.csv(resdata, file = "/home/juan/Desktop/juan/bio/mrcv/data/res/DEG-normalized.csv")
 
 
