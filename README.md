@@ -45,3 +45,8 @@ We have chosen miR169 as an example because of its possible role in stem-sugar a
 https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-017-3556-2
 
 https://www.ncbi.nlm.nih.gov/sra/?term=SRP076763
+
+
+
+
+Raw reads were processed as previously described (Pearce et al., 2016). Briefly, “Scythe” (https://github.com/vsbuffalo/scythe) was used to remove adapter contamination (default options) and “Sickle” (https://github.com/najoshi/sickle) to remove low-quality reads (default options except –l 25 –q 25). Trimmed reads were mapped to the Chinese Spring (CS42) TGACv1 genome assembly (Clavijo et al., 2017) using GSNAPl (version 2017-09-11, default parameters except -m 2 -n 1 -N 1 -A sam) (Wu and Nacu, 2010). Raw counts for gene features were obtained using ht-seq count (default parameters except -m union -a 30) (Anders et al., 2015) using the GFF file available in Ensembl plants release 37. A threshold for mapping quality was selected so that only uniquely-mapped reads were retained, ensuring homoeologue-specific expression profiles (Pearce et al., 2015b). DESeq2 version 1.17.39 (Love et al., 2014) and R version 3.4.0 were used for the normalization and classification of differentially accumulated transcripts (DATs) between infected and mock-inoculated samples (FDR-adjusted P-value ≤ 0.05, Supplementary Table S1).
