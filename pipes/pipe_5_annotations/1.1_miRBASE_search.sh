@@ -1,0 +1,1 @@
+blastn -task blastn -query data/res/04_02_19/DEG-miRNA.fasta -subject data/mature.fa -outfmt "6 qseqid sseqid qstart qend sstart send mismatch gaps pident evalue length qlen slen qcovs" > data/res/04_02_19/DEG_miRNA_mirBASE.csv
