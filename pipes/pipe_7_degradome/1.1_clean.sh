@@ -22,15 +22,15 @@ fasta_degradome=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}.tri
 transcriptome=/home/juan/Desktop/juan/bio/mrcv/data/res/04_02_19/DEG-cdna.fasta
 miRNAs=/home/juan/Desktop/juan/bio/mrcv/data/res/04_02_19/miRNA.Y.DEG.fasta
 
-mkdir /home/juan/Desktop/juan/bio/mrcv/data/res/04_02_19/cleaveland/${file_name}
+mkdir -p /home/juan/Desktop/juan/bio/mrcv/data/res/04_02_19/cleaveland/${file_name}
 out_deg=/home/juan/Desktop/juan/bio/mrcv/data/res/04_02_19/cleaveland/${file_name}/cleaves.csv
-rm -r /home/juan/Desktop/juan/bio/mrcv/data/res/04_02_19/cleaveland/${file_name}/plots
+rm -fr /home/juan/Desktop/juan/bio/mrcv/data/res/04_02_19/cleaveland/${file_name}/plots
 plots=/home/juan/Desktop/juan/bio/mrcv/data/res/04_02_19/cleaveland/${file_name}/plots
 
 #programs
 fastx_path=/home/juan/Desktop/juan/bio/sw/fastx_toolkit_0.0.13_binaries_Linux_2.6_amd64/bin
 bbduk_path=/home/juan/Desktop/juan/bio/sw/BBMap_38.42/bbmap
-gsta_path=/home/juan/Desktop/juan/bio/mrcv/sw/CleaveLand4/GSTAr_v1-0
+gsta_path=/home/juan/Desktop/juan/bio/mrcv/scripts/CleaveLand4/GSTAr_v1-0
 samtools_path=/home/juan/Desktop/juan/bio/sw/samtools-1.9
 bowtie_path=/home/juan/Desktop/juan/bio/sw/bowtie-1.2.2-linux-x86_64
 export PATH=$PATH:$bbduk_path
@@ -52,4 +52,7 @@ fi
 fastq_to_fasta -i $trimmed_degradome -o $fasta_degradome -Q33
 
 #running
-./sw/CleaveLand4/CleaveLand4.pl -e $fasta_degradome -u $miRNAs -n $transcriptome -p 0.05 -t -o $plots > $out_deg
+./scripts/CleaveLand4/CleaveLand4.pl -e $fasta_degradome -u $miRNAs -n $transcriptome -p 0.05 -t -o $plots > $out_deg
+rm file_1
+rm file_2
+rm file_3
