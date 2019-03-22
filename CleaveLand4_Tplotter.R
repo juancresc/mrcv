@@ -1,7 +1,0 @@
-args <- commandArgs(trailingOnly = TRUE)
-data <- read.table(args[1], header=TRUE, sep="\t")
-pdf(file=args[2])
-plot(data$Position, data$All, type="l", xlab="Transcript Position", ylab="Degradome 5' end Frequency", main=args[3])
-points(data$Position, data$Site, pch=16, cex=2, col="red")
-mtext(args[4])
-crap <- dev.off()

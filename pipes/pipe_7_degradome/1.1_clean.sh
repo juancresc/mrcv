@@ -11,7 +11,25 @@ adapter=""
 file_name=SRR6328739
 adapter=""
 
+file_name=SRR1197126
+adapter=""
+
+file_name=SRR1197128
+adapter=""
+
+file_name=SRR1197127
+adapter=""
+
+file_name=SRR1197125
+adapter=""
+
+file_name=SRR8113357
+
+#To check the adapter
 #reformat.sh in=$degradome out=stdout.fa | grep -v ">" | less
+#To get the file
+#cd data/degradome 
+#../../sw/sratoolkit.2.9.6-ubuntu64/bin/fastq-dump --gzip SRR1197127
 
 
 #files
@@ -39,6 +57,11 @@ export PATH=$PATH:$gsta_path
 export PATH=$PATH:$samtools_path
 export PATH=$PATH:$bowtie_path
 
+trim_galore_path=/home/juan/Desktop/juan/bio/sw/TrimGalore-0.6.0
+fastqc_path=/home/juan/Desktop/juan/bio/sw/FastQC
+export PATH=$PATH:$trim_galore_path
+export PATH=$PATH:$fastqc_path
+
 #trimming
 if [ -z "$adapter" ]
 then
@@ -52,7 +75,7 @@ fi
 fastq_to_fasta -i $trimmed_degradome -o $fasta_degradome -Q33
 
 #running
-./scripts/CleaveLand4/CleaveLand4.pl -e $fasta_degradome -u $miRNAs -n $transcriptome -p 0.05 -t -o $plots > $out_deg
+./scripts/CleaveLand4/CleaveLand4.pl -e $fasta_degradome -u $miRNAs -n $transcriptome -t -o $plots > $out_deg
 rm file_1
 rm file_2
 rm file_3
