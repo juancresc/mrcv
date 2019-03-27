@@ -1,0 +1,9 @@
+merge annotations
+run DESeq2 with genes
+run SS with genes locifile X nt
+run SS with promoter locifile X nt
+run SS with TEs locifile X nt
+run SS with MITEs locifile X nt
+
+search for gene close elements location and organize table
+
