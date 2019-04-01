@@ -7,9 +7,7 @@ do
     file_name=SRR3690386
     output_dir=/home/juan/Desktop/juan/bio/mrcv/data/degradome/
     degradome=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}.fastq.gz
-    trimmed_degradome=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}_trimmed.fastq
-    trimmed_degradome_qual=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}_trimmed_qual.fastq.gz
-    trimmed_degradome_qual_unzipped=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}_trimmed_qual.fastq
+    trimmed_degradome=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}_trimmed.fq
     fasta_degradome=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}_trimmed.fasta
 
     trimmed_degradome_gzipped_name=${file_name}_trimmed.fq.gz
@@ -50,9 +48,8 @@ do
     #bbduk.sh in=$degradome out=$trimmed_degradome ref=${bbduk_path}/resources/adapters.fa ktrim=r k=23 mink=11 hdist=1 tpe tbo
     #bbduk.sh in=$trimmed_degradome out=$trimmed_degradome_qual qtrim=r trimq=10
 
-    trim_galore --length 12 --dont_gzip $degradome -o $output_dir
+    trim_galore --dont_gzip $degradome -o $output_dir
     fastq_to_fasta -i $trimmed_degradome -o $fasta_degradome -Q33
-    
     
     #fastq2fasta
     #fastq_to_fasta -i $trimmed_degradome_qual_unzipped -o $fasta_degradome -Q33
