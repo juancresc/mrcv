@@ -4,11 +4,19 @@ for file_name in SRR3690386 SRR6328740 SRR6328739 SRR1197126 SRR1197128 SRR11971
 do 
     #../../sw/sratoolkit.2.9.6-ubuntu64/bin/fastq-dump --gzip SRR1197127
     #files
+    file_name=SRR3690386
+    output_dir=/home/juan/Desktop/juan/bio/mrcv/data/degradome/
     degradome=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}.fastq.gz
-    trimmed_degradome=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}_trimmed.fastq.gz
+    trimmed_degradome=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}_trimmed.fastq
     trimmed_degradome_qual=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}_trimmed_qual.fastq.gz
     trimmed_degradome_qual_unzipped=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}_trimmed_qual.fastq
-    fasta_degradome=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}_trimmed_qual.fasta
+    fasta_degradome=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}_trimmed.fasta
+
+    trimmed_degradome_gzipped_name=${file_name}_trimmed.fq.gz
+    trimmed_degradome_gzipped=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}_trimmed.fq.gz
+    trimmed_degradome_report_name=${file_name}.fastq.gz_trimming_report.txt
+    trimmed_degradome_report=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}.fastq.gz_trimming_report.txt
+
 
     transcriptome=/home/juan/Desktop/juan/bio/mrcv/data/res/04_02_19/DEG-cdna.fasta
     miRNAs=/home/juan/Desktop/juan/bio/mrcv/data/res/04_02_19/miRNA.Y.DEG.fasta
@@ -39,19 +47,15 @@ do
 
     #trimming 
 
-    bbduk.sh in=$degradome out=$trimmed_degradome ref=${bbduk_path}/resources/adapters.fa ktrim=r k=23 mink=11 hdist=1 tpe tbo
-    bbduk.sh in=$trimmed_degradome out=$trimmed_degradome_qual qtrim=r trimq=10
+    #bbduk.sh in=$degradome out=$trimmed_degradome ref=${bbduk_path}/resources/adapters.fa ktrim=r k=23 mink=11 hdist=1 tpe tbo
+    #bbduk.sh in=$trimmed_degradome out=$trimmed_degradome_qual qtrim=r trimq=10
 
-    #trim_galore --small_rna $degradome
-    # --length 17
-    # 
-    #mv $trimmed_degradome_gzipped_name $trimmed_degradome_gzipped
-    #mv $trimmed_degradome_report_name $trimmed_degradome_report
-    #gunzip $trimmed_degradome_gzipped $trimmed_degradome
-
+    trim_galore --length 12 --dont_gzip $degradome -o $output_dir
+    fastq_to_fasta -i $trimmed_degradome -o $fasta_degradome -Q33
+    
+    
     #fastq2fasta
-    gunzip $trimmed_degradome_qual $trimmed_degradome_qual_unzipped
-    fastq_to_fasta -i $trimmed_degradome_qual_unzipped -o $fasta_degradome -Q33
+    #fastq_to_fasta -i $trimmed_degradome_qual_unzipped -o $fasta_degradome -Q33
 
     #running
     ./scripts/CleaveLand4/CleaveLand4.pl -e $fasta_degradome -u $miRNAs -n $transcriptome -t -p 0.05 -o $plots > $out_deg

@@ -3,10 +3,8 @@
 
 # In[18]:
 
-
-import pandas as pd
-chromosomes = ['1A','1B','1D','2A','2B','2D','3A','3B','3D','4A','4B','4D','5A','5B','5D','6A','6B','6D','7A','7B','7D','Un']
-for chromosome in chromosomes:
+def filter(chromosome):
+    import pandas as pd
     path_blast = 'data/TEs/blast/' + chromosome + '.fasta.csv'
     print('working on ', path_blast)
     path_blast_filtered = 'data/TEs/blast/' + chromosome + '.filtered.csv'
@@ -27,7 +25,7 @@ for chromosome in chromosomes:
 
     if(params['max_len']):
         df = df[df.qlen < params['max_len']]
-    print('Max len: ' + str(len(df.index)))    
+    print('Max len: ' + str(len(df.index)))
     max_length = str(len(df.index))
 
     #filter by query / subject length treshold
@@ -61,7 +59,7 @@ for chromosome in chromosomes:
     for seq in df.sseqid.unique():
         dfs[seq] = df[df.sseqid == seq]
 
-    # filter overlapped 
+    # filter overlapped
     rows = []
     discard = []
     total = len(df.index)
@@ -99,3 +97,13 @@ for chromosome in chromosomes:
     print('Min qcov: ' + str(min_qcov))
     print('Non overlapped: ' + str(non_overlapped))
     print('Saved: ' + path_blast_filtered)
+
+
+
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()#pylint: disable=invalid-name
+    parser.add_argument("-c", "--chromosome", help=" ", required=True)
+    args = parser.parse_args()#pylint: disable=invalid-name
+    filter(args.chromosome)
