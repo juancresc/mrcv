@@ -4,7 +4,6 @@ for file_name in SRR3690386 SRR6328740 SRR6328739 SRR1197126 SRR1197128 SRR11971
 do 
     #../../sw/sratoolkit.2.9.6-ubuntu64/bin/fastq-dump --gzip SRR1197127
     #files
-    file_name=SRR3690386
     output_dir=/home/juan/Desktop/juan/bio/mrcv/data/degradome/
     degradome=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}.fastq.gz
     trimmed_degradome=/home/juan/Desktop/juan/bio/mrcv/data/degradome/${file_name}_trimmed.fq
