@@ -1,0 +1,26 @@
+./sw/ShortStack/ShortStack --readfile /home/juan/Desktop/juan/bio/mrcv/data/sRNASeq/21dpiR1C.trimmed.fq.gz /home/juan/Desktop/juan/bio/mrcv/data/sRNASeq/21dpiR3C.trimmed.fq.gz /home/juan/Desktop/juan/bio/mrcv/data/sRNASeq/21dpiR1T.trimmed.fq.gz /home/juan/Desktop/juan/bio/mrcv/data/sRNASeq/21dpiR3T.trimmed.fq.gz --genomefile /home/juan/Desktop/juan/bio/data/IWGSC/42/Triticum_aestivum.IWGSC.dna.toplevel.fa --outdir data/ss/GPT --bowtie_m all --locifile /home/juan/Desktop/juan/bio/mrcv/data/genome/GPT.locifile.csv
+
+#all GTP
+./sw/ShortStack/ShortStack --bamfile data/ss/GPT/merged_alignments.bam  --genomefile /home/juan/Desktop/juan/bio/data/IWGSC/42/Triticum_aestivum.IWGSC.dna.toplevel.fa --outdir data/ss/GPT_2 --bowtie_m all --locifile /home/juan/Desktop/juan/bio/mrcv/data/genome/GPT.locifile.csv --nohp 
+
+#Filter sRNA length
+reformat.sh in=merged_alignments.bam out=merged_alignments_24.bam  minlength=24 maxlength=24
+reformat.sh in=merged_alignments.bam out=merged_alignments_21.bam  minlength=21 maxlength=21
+
+#MITEs
+./sw/ShortStack/ShortStack --bamfile data/ss/GPT/merged_alignments.bam  --genomefile /home/juan/Desktop/juan/bio/data/IWGSC/42/Triticum_aestivum.IWGSC.dna.toplevel.fa --outdir data/ss/GTP_MITEs --bowtie_m all --locifile /home/juan/Desktop/juan/bio/mrcv/data/genome/locifiles/mites.locifile.csv
+
+#promoters
+./sw/ShortStack/ShortStack --bamfile data/ss/GPT/merged_alignments.bam  --genomefile /home/juan/Desktop/juan/bio/data/IWGSC/42/Triticum_aestivum.IWGSC.dna.toplevel.fa --outdir data/ss/GTP_promoters --bowtie_m all --locifile /home/juan/Desktop/juan/bio/mrcv/data/genome/locifiles/promoters.locifile.csv
+
+#TEs
+./sw/ShortStack/ShortStack --bamfile data/ss/GPT/merged_alignments.bam  --genomefile /home/juan/Desktop/juan/bio/data/IWGSC/42/Triticum_aestivum.IWGSC.dna.toplevel.fa --outdir data/ss/GTP_TEs_vMITEs --bowtie_m all --locifile /home/juan/Desktop/juan/bio/mrcv/data/genome/locifiles/TEs_vMITEs.locifile.csv --nohp
+
+#genes
+./sw/ShortStack/ShortStack --bamfile data/ss/GPT/merged_alignments.bam  --genomefile /home/juan/Desktop/juan/bio/data/IWGSC/42/Triticum_aestivum.IWGSC.dna.toplevel.fa --outdir data/ss/GPT_genes --bowtie_m all --locifile /home/juan/Desktop/juan/bio/mrcv/data/genome/locifiles/genes.locifile.csv --nohp
+
+#MITEs
+./sw/ShortStack/ShortStack --bamfile data/ss/GPT/merged_alignments.bam  --genomefile /home/juan/Desktop/juan/bio/data/IWGSC/42/Triticum_aestivum.IWGSC.dna.toplevel.fa --outdir data/ss/GTP_MITEs --bowtie_m all --locifile /home/juan/Desktop/juan/bio/mrcv/data/genome/locifiles/mites.locifile.csv        
+
+#21nt MITEs
+./sw/ShortStack/ShortStack --bamfile data/ss/GPT/merged_alignments_21.bam  --genomefile /home/juan/Desktop/juan/bio/data/IWGSC/42/Triticum_aestivum.IWGSC.dna.toplevel.fa --outdir data/ss/GTP_MITEs_21 --bowtie_m all --locifile /home/juan/Desktop/juan/bio/mrcv/data/genome/locifiles/mites.locifile.csv

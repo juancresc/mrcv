@@ -7,9 +7,9 @@
 import pandas as pd
 chromosomes = ['1A','1B','1D','2A','2B','2D','3A','3B','3D','4A','4B','4D','5A','5B','5D','6A','6B','6D','7A','7B','7D','Un']
 for chromosome in chromosomes:
-    path_blast = 'data/TEs/blast/' + chromosome + '.fasta.csv'
+    path_blast = 'data/TEs/blast/mites/' + chromosome + '.fasta.mites.csv'
     print('working on ', path_blast)
-    path_blast_filtered = 'data/TEs/blast/' + chromosome + '.filtered.csv'
+    path_blast_filtered = 'data/TEs/blast/mites_filtered/' + chromosome + '.filtered.csv'
     #TEs
     params = {'min_len':50,'max_len':False,'min_distance':5,'max_q':1.3,'min_q':0.7,'min_pident':80,'min_qcov':50}
 
