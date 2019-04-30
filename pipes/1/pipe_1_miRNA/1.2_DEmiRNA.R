@@ -6,11 +6,11 @@ library("DESeq2")
 alpha <- 0.1
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path));
 getwd()
-data_path <- "../../data/ss/04_02_19/counts.valid.csv"
-result_path <- "../../data/res/04_02_19/"
+data_path <- "/home/juan/Desktop/juan/bio/mrcv/data/ss/GTP_MITEs_21/counts.Y.csv"
+result_path <- "/home/juan/Desktop/juan/bio/mrcv/data/ss/GTP_MITEs_21/"
 # Load data
 countdata <- read.table(data_path,header=TRUE,sep="\t")
-result_file = paste(result_path,"/diffexpr-results.",alpha,".csv",sep="");
+result_file = paste(result_path,"/DEGs.",alpha,".csv",sep="");
 #DROP unique miRNA clusters
 
 # I don't know why I have to do this first, otherwise RStudio hangs
