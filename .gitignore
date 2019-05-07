@@ -9,3 +9,4 @@ file_2
 file_3
 CleaveLand4_Tplotter.R
 output_dir/
+*.fastq.gz
