@@ -8,7 +8,7 @@ reformat.sh in=data/ss_mite/all_all/merged_alignments.bam out=data/ss_mite/all_a
 ./sw/ShortStack/ShortStack --bamfile data/ss_mite/all_all/merged_alignments_21.bam --genomefile /home/juan/Desktop/juan/bio/data/IWGSC/42/Triticum_aestivum.IWGSC.dna.toplevel.fa --outdir data/ss_mite/all_21nt --bowtie_m all --foldsize 1000
 
 #MITEs loci and all sRNA
-./sw/ShortStack/ShortStack --bamfile data/ss_mite/all_all/merged_alignments.bam --genomefile /home/juan/Desktop/juan/bio/data/IWGSC/42/Triticum_aestivum.IWGSC.dna.toplevel.fa --outdir data/ss_mite/mite_all --bowtie_m all --foldsize 1000 --locifile /home/juan/Desktop/juan/bio/mrcv/data/genome/locifiles/mites.locifile.csv
+./sw/ShortStack/ShortStack --bamfile data/ss_mite/all_all/merged_alignments.bam --genomefile /home/juan/Desktop/juan/bio/data/IWGSC/42/Triticum_aestivum.IWGSC.dna.toplevel.fa --outdir data/ss_mite/mite_all --bowtie_m all --foldsize 1000 --locifile /home/juan/Desktop/juan/bio/mrcv/data/genome/locifiles/mitesall.locifile.csv
 
 #MITEs loci and 21nt sRNA
-./sw/ShortStack/ShortStack --bamfile data/ss_mite/all_all/merged_alignments_21.bam --genomefile /home/juan/Desktop/juan/bio/data/IWGSC/42/Triticum_aestivum.IWGSC.dna.toplevel.fa --outdir data/ss_mite/mite_21 --bowtie_m all --foldsize 1000 --locifile /home/juan/Desktop/juan/bio/mrcv/data/genome/locifiles/mites.locifile.csv
+./sw/ShortStack/ShortStack --bamfile data/ss_mite/all_all/merged_alignments_21.bam --genomefile /home/juan/Desktop/juan/bio/data/IWGSC/42/Triticum_aestivum.IWGSC.dna.toplevel.fa --outdir data/ss_mite/mite_21 --bowtie_m all --foldsize 1000 --locifile /home/juan/Desktop/juan/bio/mrcv/data/genome/locifiles/mitesall.locifile.csv
