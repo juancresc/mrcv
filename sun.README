@@ -1,0 +1,35 @@
+cd /home/juan/Desktop/juan/bio/sw/sratoolkit.2.9.6-ubuntu64/bin
+export PATH=$PATH:$(pwd)
+cd /home/juan/Desktop/juan/bio/mrcv/data/sun
+
+
+https://bmcplantbiol.biomedcentral.com/articles/10.1186/1471-2229-14-142
+
+Degradomes:
+seedling root degradome library(SRR1197127)
+seedling leaf degradome library(SRR1197126)
+germinating seed embryo degradome library(SRR1197125)
+grain of 8 days after pollination degradome library(SRR1197128)
+
+sRNAs:
+FL: flag leaf sRNA library(SRR1196023)
+GRA15: grain of 15 days after pollination sRNA library(SRR1196045)
+GRA8: grain of 8 days after pollination sRNA library(SRR1196029)
+YS15: 10-15 mm young spike sRNA library(SRR1196022)
+YS5: 0-5 mm young spikes sRNA libarary(SRR1195944)
+SJ: stems in the jointing stage sRNA library(SRR1195282)
+SR: seedling root sRNA library(SRR1195281)
+SL: seedling leaf sRNA library(SRR1195280)
+SH: seedling shoot sRNA library(SRR1195279)
+DG: dry grain sRNA library(SRR1195024)
+GSE: embryo of germinating seed sRNA library(SRR1195025)
+
+
+gunzip SRR1196023.fastq.gz
+cat SRR1196023.fastq | awk '{if(NR%4==2) print length($1)}' | sort | uniq -c
+cat SRR1196023.fastq | paste - - - - | awk 'length($2)  >= 18 && length($2) <= 26' | sed 's/\t/\n/g' > SRR1196023.filtered.fastq
+cat SRR1196023.fastq | awk '{if(NR%4==2) print length($1)}' | sort | uniq -c
+gzip SRR1196023.filtered.fastq.gz
+
+
+./sw/ShortStack/ShortStack --readfile data/han/sRNA/SRR6328649.clipped.fastq.gz --genomefile /home/juan/Desktop/juan/bio/data/IWGSC/42/Triticum_aestivum.IWGSC.dna.toplevel.fa --outdir data/ss_mite_han/SRR6328649 --bowtie_m all --foldsize 1000
