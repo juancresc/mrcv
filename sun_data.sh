@@ -6,6 +6,7 @@ fastq-dump --gzip SRR1197127
 fastq-dump --gzip SRR1197126
 fastq-dump --gzip SRR1197125
 fastq-dump --gzip SRR1197128
+
 fastq-dump --gzip SRR1196023
 fastq-dump --gzip SRR1196045
 fastq-dump --gzip SRR1196029

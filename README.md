@@ -122,3 +122,15 @@ Por ejemplo, 12dpiR1C significa 12 días post infección, repetición 1, tratami
  
 También les envío 2 archivos de texto con 2 columnas que tienen los genes diferencialmente expresados por RNAseq a 12 dpi y a 21 dpi con su respectivo fold change (en formato TGACv1). Van a notar que a 12 dpi hay solo 2 genes, por lo que evidentemente no hubieron grandes cambios (al menos de mRNAs) a ese tiempo. Por eso en el paper que estamos escribiendo nos enfocamos en el tiempo de 21 dpi. Igualmente, les diría que también analicen los sRNAs a 12 dpi, porque creo recordar que había diferencias.
  
+
+
+
+SUN
+
+/home/juan/Desktop/juan/bio/mrcv/data/sun
+
+export PATH=$PATH:/home/juan/Desktop/juan/bio/sw/Trimmomatic-0.38
+java -jar trimmomatic-0.35.jar SE -phred33 SRR1195024.fastq.gz SRR1195024.trimmed.fastq.gz ILLUMINACLIP:TruSeq3-SE:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:18
+
+TGGAATTCTCGGGTGCCAAGG
+TCTGGCGAGGGACATACACTGTTCGTATGCCGTC
